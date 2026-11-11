@@ -1,0 +1,39 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "eWeLink Remote BLE is already configured."
+    },
+    "step": {
+      "user": {
+        "description": "Adds SONOFF eWeLink-Remote BLE devices automatically when a button is pressed."
+      }
+    }
+  },
+  "entity": {
+    "event": {
+      "button_1": {"name": "Button 1 - top left"},
+      "button_2": {"name": "Button 2 - top middle"},
+      "button_3": {"name": "Button 3 - top right"},
+      "button_4": {"name": "Button 4 - bottom left"},
+      "button_5": {"name": "Button 5 - bottom middle"},
+      "button_6": {"name": "Button 6 - bottom right"}
+    }
+  },
+  "device_automation": {
+    "trigger_type": {
+      "button_1": "Button 1 - top left ({subtype})",
+      "button_2": "Button 2 - top middle ({subtype})",
+      "button_3": "Button 3 - top right ({subtype})",
+      "button_4": "Button 4 - bottom left ({subtype})",
+      "button_5": "Button 5 - bottom middle ({subtype})",
+      "button_6": "Button 6 - bottom right ({subtype})"
+    },
+    "trigger_subtype": {
+      "single": "Short press",
+      "double": "Double press",
+      "hold_start": "Hold started",
+      "hold_repeat": "Held (repeat)",
+      "hold_release": "Released after hold"
+    }
+  }
+}
