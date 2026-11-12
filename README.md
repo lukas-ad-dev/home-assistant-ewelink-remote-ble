@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="custom_components/ewelink_remote_ble/brand/icon@2x.png" alt="eWeLink Remote BLE icon" width="128">
+</p>
+
 # eWeLink Remote BLE for Home Assistant
 
 [English](#english) | [Deutsch](#deutsch)
@@ -108,8 +112,9 @@ triggers.
 
 ## Troubleshooting
 
-- **Device does not appear:** verify that BLE Passthrough receives raw
-  advertisements, then press an R5 button.
+- **Device does not appear:** verify that Home Assistant receives Bluetooth
+  advertisements from the configured receiver or proxy, then press an R5
+  button.
 - **Device exists but has no entities:** restart Home Assistant after updating
   this integration to version 0.3.0 or later.
 - **Hold release feels delayed:** this is expected because the R5 has no release
@@ -252,8 +257,9 @@ Ereignis-Entitäten direkt als Auslöser verwenden.
 
 ### Fehlerbehebung
 
-- **Das Gerät erscheint nicht:** Prüfen, ob BLE Passthrough rohe
-  Werbeaussendungen empfängt, und anschließend eine R5-Taste drücken.
+- **Das Gerät erscheint nicht:** Prüfen, ob Home Assistant
+  Bluetooth-Werbeaussendungen vom eingerichteten Empfänger oder Proxy empfängt,
+  und anschließend eine R5-Taste drücken.
 - **Das Gerät ist vorhanden, hat aber keine Entitäten:** Home Assistant nach
   einer Aktualisierung auf Version 0.3.0 oder neuer neu starten.
 - **Das Loslassen wird verzögert erkannt:** Das ist zu erwarten, da der R5 kein

@@ -27,6 +27,7 @@ class EwelinkRemoteButtonEvent(EventEntity):
     """Represent one physical button on an R5 remote."""
 
     _attr_has_entity_name = True
+    _attr_icon = "mdi:gesture-tap-button"
     _attr_should_poll = False
 
     def __init__(self, remote_id: str, button: int) -> None:

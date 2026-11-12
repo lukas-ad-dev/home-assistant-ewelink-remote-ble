@@ -1,7 +1,7 @@
 {
   "domain": "ewelink_remote_ble",
   "name": "eWeLink Remote BLE",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "documentation": "https://github.com/lukas-ad-dev/home-assistant-ewelink-remote-ble",
   "issue_tracker": "https://github.com/lukas-ad-dev/home-assistant-ewelink-remote-ble/issues",
   "requirements": [],
