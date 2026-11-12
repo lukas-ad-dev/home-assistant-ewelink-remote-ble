@@ -12,8 +12,8 @@ every physical remote as a normal Home Assistant device. Each R5 can be named,
 assigned to an area, and used in device-based automations.
 
 > [!IMPORTANT]
-> **No additional BLE Passthrough project, Android app, eWeLink gateway, or
-> paid software is required.** This integration registers its own listener with
+> **No additional [BLE Passthrough project](https://github.com/iHost-Open-Source-Project/ble_passthrough),
+> Android app, eWeLink gateway, or paid software is required.** This integration registers its own listener with
 > Home Assistant's native Bluetooth system. You only need a compatible
 > Bluetooth receiver or proxy that is already available to Home Assistant.
 
@@ -146,8 +146,9 @@ Jeder R5 kann benannt, einem Bereich zugeordnet und in gerätebasierten
 Automatisierungen verwendet werden.
 
 > [!IMPORTANT]
-> **Es werden weder ein zusätzliches BLE-Passthrough-Projekt noch eine
-> Android-App, ein eWeLink-Gateway oder kostenpflichtige Software benötigt.**
+> **Es werden weder ein zusätzliches
+> [BLE-Passthrough-Projekt](https://github.com/iHost-Open-Source-Project/ble_passthrough)
+> noch eine Android-App, ein eWeLink-Gateway oder kostenpflichtige Software benötigt.**
 > Diese Integration registriert selbst einen Empfänger im nativen
 > Bluetooth-System von Home Assistant. Benötigt wird lediglich ein kompatibler
 > Bluetooth-Empfänger oder Proxy, der Home Assistant bereits zur Verfügung
