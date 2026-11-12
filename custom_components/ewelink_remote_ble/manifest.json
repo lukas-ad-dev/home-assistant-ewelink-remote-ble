@@ -1,13 +1,13 @@
 {
   "domain": "ewelink_remote_ble",
   "name": "eWeLink Remote BLE",
-  "version": "0.3.1",
   "codeowners": ["@lukas-ad-dev"],
+  "config_flow": true,
+  "dependencies": ["bluetooth"],
   "documentation": "https://github.com/lukas-ad-dev/home-assistant-ewelink-remote-ble",
+  "integration_type": "service",
+  "iot_class": "local_push",
   "issue_tracker": "https://github.com/lukas-ad-dev/home-assistant-ewelink-remote-ble/issues",
   "requirements": [],
-  "dependencies": ["bluetooth"],
-  "iot_class": "local_push",
-  "integration_type": "service",
-  "config_flow": true
+  "version": "0.3.1"
 }
