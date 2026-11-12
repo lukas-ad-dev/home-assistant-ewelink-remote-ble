@@ -1,5 +1,9 @@
 # eWeLink Remote BLE for Home Assistant
 
+[English](#english) | [Deutsch](#deutsch)
+
+## English
+
 Local Home Assistant support for the **SONOFF SwitchMan R5** without an
 eWeLink-Remote gateway.
 
@@ -120,3 +124,139 @@ or CoolKit/eWeLink.
 ## License
 
 MIT License. See [LICENSE](LICENSE).
+
+---
+
+## Deutsch
+
+Lokale Home-Assistant-Unterstützung für den **SONOFF SwitchMan R5** ohne ein
+eWeLink-Remote-Gateway.
+
+Die Integration wertet die passiven Bluetooth-Werbeaussendungen des R5 aus und
+stellt jede physische Fernbedienung als normales Home-Assistant-Gerät bereit.
+Jeder R5 kann benannt, einem Bereich zugeordnet und in gerätebasierten
+Automatisierungen verwendet werden.
+
+### Funktionen
+
+- Ein Home-Assistant-Gerät pro physischem R5
+- Automatische Erkennung weiterer R5-Fernbedienungen
+- Sechs Ereignis-Entitäten pro R5, deren Namen die jeweilige Tastenposition
+  enthalten
+- Geräteauslöser für jede Taste und jede Betätigungsart
+- Einfachdruck, Doppeldruck, Beginn des Langdrucks, Langdruck-Wiederholung und
+  Loslassen nach einem Langdruck
+- Vollständig lokaler Betrieb ohne eWeLink-Konto oder Cloud-Verbindung
+- Mehrere BLE-Empfänger beziehungsweise Proxys können denselben R5 empfangen,
+  ohne doppelte Ereignisse auszulösen
+- Englische und deutsche Übersetzungen
+
+### Tastenbelegung
+
+| Position | Obere Reihe | Untere Reihe |
+| --- | --- | --- |
+| Links | Taste 1 | Taste 4 |
+| Mitte | Taste 2 | Taste 5 |
+| Rechts | Taste 3 | Taste 6 |
+
+Jede Taste stellt folgende Ereignistypen bereit:
+
+| Ereignistyp | Bedeutung |
+| --- | --- |
+| `single` | Kurzer Tastendruck |
+| `double` | Doppeldruck |
+| `hold_start` | Langdruck wurde begonnen |
+| `hold_repeat` | Weiteres Datenpaket während des Gedrückthaltens |
+| `hold_release` | Taste wurde nach einem Langdruck losgelassen |
+
+Der R5 sendet kein eigenes Datenpaket beim Loslassen. `hold_release` wird deshalb
+lokal erzeugt, wenn 1,6 Sekunden lang kein weiteres Langdruck-Paket empfangen
+wurde. Dadurch eignet sich das Ereignis für das Stoppen von Dimm- und
+Jalousiefahrten, hat aber eine kleine technisch bedingte Verzögerung.
+
+### Voraussetzungen
+
+- Home Assistant mit aktivierter Bluetooth-Integration
+- Ein Empfänger, der die **rohen BLE-Werbeaussendungen** an Home Assistant
+  weiterleitet
+- Die Integration
+  [BLE Passthrough](https://github.com/iHost-Open-Source-Project/ble_passthrough)
+  oder eine gleichwertige Quelle, die `BluetoothServiceInfoBleak.raw`
+  bereitstellt
+
+Getestet mit Home Assistant 2026.11 und einem SMLIGHT SLZB-MR4U mit SLZB-OS.
+
+> [!IMPORTANT]
+> Ein Bluetooth-Proxy ist nicht dasselbe wie ein eWeLink-Remote-Gateway. Diese
+> Integration koppelt den R5 nicht und bildet das proprietäre Gateway nicht
+> nach. Sie wertet passiv die Aussendungen des R5 aus, die ein kompatibler
+> Empfänger an Home Assistant weiterleitet.
+
+### Installation mit HACS
+
+1. HACS in Home Assistant öffnen.
+2. **Integrationen** und anschließend **Benutzerdefinierte Repositories**
+   öffnen.
+3. `https://github.com/lukas-ad-dev/home-assistant-ewelink-remote-ble` als
+   Repository vom Typ **Integration** hinzufügen.
+4. **eWeLink Remote BLE** installieren und Home Assistant neu starten.
+5. **Einstellungen → Geräte & Dienste → Integration hinzufügen** öffnen.
+6. Nach **eWeLink Remote BLE** suchen und das leere Einrichtungsformular
+   abschließen.
+7. Einmal eine beliebige Taste des R5 drücken. Die Fernbedienung erscheint als
+   neues Gerät mit sechs Ereignis-Entitäten.
+
+### Manuelle Installation
+
+Den Ordner `custom_components/ewelink_remote_ble` in das
+Home-Assistant-Konfigurationsverzeichnis kopieren, Home Assistant neu starten
+und die Integration anschließend unter **Einstellungen → Geräte & Dienste**
+hinzufügen.
+
+### Bereiche und mehrere Fernbedienungen
+
+Jeder physische R5 erhält eine eigene stabile Gerätekennung. Das Gerät öffnen,
+**Bearbeiten** wählen und den gewünschten Bereich festlegen. Ein weiterer R5
+wird als separates Gerät erkannt und kann einem anderen Bereich zugeordnet
+werden. Die sechs Tasten bleiben Entitäten der jeweiligen Fernbedienung und
+werden nicht fälschlicherweise als sechs einzelne Geräte angelegt.
+
+### Beispiel für eine Automatisierung
+
+Eine typische Belegung für eine Jalousie oder ein Rollo ist:
+
+- Taste 1 `single`: vollständig öffnen
+- Taste 1 `hold_start`: Öffnen starten
+- Taste 1 `hold_release`: stoppen
+- Taste 3 `single`: vollständig schließen
+- Taste 3 `hold_start`: Schließen starten
+- Taste 3 `hold_release`: stoppen
+
+Beim Erstellen einer Automatisierung den R5 unter **Gerät** auswählen und danach
+Taste und Betätigungsart festlegen. Alternativ lassen sich die
+Ereignis-Entitäten direkt als Auslöser verwenden.
+
+### Fehlerbehebung
+
+- **Das Gerät erscheint nicht:** Prüfen, ob BLE Passthrough rohe
+  Werbeaussendungen empfängt, und anschließend eine R5-Taste drücken.
+- **Das Gerät ist vorhanden, hat aber keine Entitäten:** Home Assistant nach
+  einer Aktualisierung auf Version 0.3.0 oder neuer neu starten.
+- **Das Loslassen wird verzögert erkannt:** Das ist zu erwarten, da der R5 kein
+  Loslass-Paket sendet. Die Integration wartet 1,6 Sekunden nach der letzten
+  Langdruck-Aussendung.
+- **Mehrere Empfänger:** Doppelte Meldungen mehrerer Gateways werden anhand des
+  R5-Sequenzzählers unterdrückt.
+
+### Danksagung und Haftungsausschluss
+
+Die Protokollanalyse und der öffentliche Testvektor basieren unter anderem auf
+[Flobul/Tasmota-eWeLinkRemote](https://github.com/Flobul/Tasmota-eWeLinkRemote).
+Die BLE-Weiterleitung erfolgt durch das separate BLE-Passthrough-Projekt.
+
+Dies ist eine unabhängige Community-Integration und steht in keiner Verbindung
+zu SONOFF oder CoolKit/eWeLink.
+
+### Lizenz
+
+MIT-Lizenz. Siehe [LICENSE](LICENSE).
