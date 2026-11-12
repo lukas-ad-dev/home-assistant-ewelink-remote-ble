@@ -11,6 +11,12 @@ The integration decodes the R5's passive Bluetooth advertisements and exposes
 every physical remote as a normal Home Assistant device. Each R5 can be named,
 assigned to an area, and used in device-based automations.
 
+> [!IMPORTANT]
+> **No additional BLE Passthrough project, Android app, eWeLink gateway, or
+> paid software is required.** This integration registers its own listener with
+> Home Assistant's native Bluetooth system. You only need a compatible
+> Bluetooth receiver or proxy that is already available to Home Assistant.
+
 ## Features
 
 - One Home Assistant device per physical R5
@@ -48,9 +54,8 @@ delay.
 ## Requirements
 
 - Home Assistant with the Bluetooth integration enabled
-- A receiver that forwards the **raw BLE advertisement** to Home Assistant
-- The [BLE Passthrough integration](https://github.com/iHost-Open-Source-Project/ble_passthrough)
-  or an equivalent source that supplies `BluetoothServiceInfoBleak.raw`
+- A compatible Bluetooth receiver or proxy that forwards the complete BLE
+  advertisement through Home Assistant's native Bluetooth system
 
 Tested with Home Assistant 2026.11 and an SMLIGHT SLZB-MR4U running SLZB-OS.
 
@@ -116,7 +121,10 @@ triggers.
 
 Protocol research and the public test vector were informed by
 [Flobul/Tasmota-eWeLinkRemote](https://github.com/Flobul/Tasmota-eWeLinkRemote).
-BLE forwarding is provided by the separate BLE Passthrough project.
+The separate
+[iHost BLE Passthrough project](https://github.com/iHost-Open-Source-Project/ble_passthrough)
+was also used as a reference during early testing. It is not a dependency of
+this integration and does not need to be installed.
 
 This is an independent community integration and is not affiliated with SONOFF
 or CoolKit/eWeLink.
@@ -136,6 +144,14 @@ Die Integration wertet die passiven Bluetooth-Werbeaussendungen des R5 aus und
 stellt jede physische Fernbedienung als normales Home-Assistant-Gerät bereit.
 Jeder R5 kann benannt, einem Bereich zugeordnet und in gerätebasierten
 Automatisierungen verwendet werden.
+
+> [!IMPORTANT]
+> **Es werden weder ein zusätzliches BLE-Passthrough-Projekt noch eine
+> Android-App, ein eWeLink-Gateway oder kostenpflichtige Software benötigt.**
+> Diese Integration registriert selbst einen Empfänger im nativen
+> Bluetooth-System von Home Assistant. Benötigt wird lediglich ein kompatibler
+> Bluetooth-Empfänger oder Proxy, der Home Assistant bereits zur Verfügung
+> steht.
 
 ### Funktionen
 
@@ -177,12 +193,9 @@ Jalousiefahrten, hat aber eine kleine technisch bedingte Verzögerung.
 ### Voraussetzungen
 
 - Home Assistant mit aktivierter Bluetooth-Integration
-- Ein Empfänger, der die **rohen BLE-Werbeaussendungen** an Home Assistant
+- Ein kompatibler Bluetooth-Empfänger oder Proxy, der die vollständige
+  BLE-Werbeaussendung über das native Bluetooth-System von Home Assistant
   weiterleitet
-- Die Integration
-  [BLE Passthrough](https://github.com/iHost-Open-Source-Project/ble_passthrough)
-  oder eine gleichwertige Quelle, die `BluetoothServiceInfoBleak.raw`
-  bereitstellt
 
 Getestet mit Home Assistant 2026.11 und einem SMLIGHT SLZB-MR4U mit SLZB-OS.
 
@@ -252,7 +265,10 @@ Ereignis-Entitäten direkt als Auslöser verwenden.
 
 Die Protokollanalyse und der öffentliche Testvektor basieren unter anderem auf
 [Flobul/Tasmota-eWeLinkRemote](https://github.com/Flobul/Tasmota-eWeLinkRemote).
-Die BLE-Weiterleitung erfolgt durch das separate BLE-Passthrough-Projekt.
+Das separate
+[iHost-BLE-Passthrough-Projekt](https://github.com/iHost-Open-Source-Project/ble_passthrough)
+wurde bei den ersten Tests ebenfalls als Referenz verwendet. Es ist keine
+Abhängigkeit dieser Integration und muss nicht installiert werden.
 
 Dies ist eine unabhängige Community-Integration und steht in keiner Verbindung
 zu SONOFF oder CoolKit/eWeLink.
