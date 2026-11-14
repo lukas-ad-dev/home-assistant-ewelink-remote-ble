@@ -81,8 +81,9 @@ Tested with Home Assistant 2026.11 and an SMLIGHT SLZB-MR4U running SLZB-OS.
 6. Search for **eWeLink Remote BLE** and complete the empty setup form.
 7. Press any R5 button once. Home Assistant shows the remote as a discovered
    device, but does not add it yet.
-8. Select **Configure**, then **Submit**. Press any button on that same R5 within
-   60 seconds to confirm physical access. Only then is the device created with
+8. Select **Configure**. The button-confirmation screen opens immediately. Press
+   any button on that same R5 within 60 seconds to confirm physical access. Only
+   then is the device created with
    six event entities.
 
 ## Manual installation
@@ -233,9 +234,10 @@ Getestet mit Home Assistant 2026.11 und einem SMLIGHT SLZB-MR4U mit SLZB-OS.
 7. Einmal eine beliebige Taste des R5 drücken. Home Assistant zeigt die
    Fernbedienung zunächst nur als entdecktes Gerät an und fügt sie noch nicht
    hinzu.
-8. **Konfigurieren** und danach **Absenden** wählen. Innerhalb von 60 Sekunden
-   eine beliebige Taste genau dieser Fernbedienung drücken. Erst nach dieser
-   physischen Bestätigung wird das Gerät mit sechs Ereignis-Entitäten angelegt.
+8. **Konfigurieren** wählen. Die Aufforderung zum Tastendruck öffnet sich sofort.
+   Innerhalb von 60 Sekunden eine beliebige Taste genau dieser Fernbedienung
+   drücken. Erst nach dieser physischen Bestätigung wird das Gerät mit sechs
+   Ereignis-Entitäten angelegt.
 
 ### Manuelle Installation
 

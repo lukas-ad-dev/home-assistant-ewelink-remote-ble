@@ -16,6 +16,7 @@ from .const import (
 )
 
 _CONFIRM_TIMEOUT = 60.0
+_INTERACTION_POLL_INTERVAL = 0.25
 
 
 class EwelinkRemoteBleConfigFlow(ConfigFlow, domain=DOMAIN):
@@ -57,31 +58,18 @@ class EwelinkRemoteBleConfigFlow(ConfigFlow, domain=DOMAIN):
 
         await self.async_set_unique_id(self._remote_id)
         self._abort_if_unique_id_configured()
-        return await self.async_step_confirm()
-
-    async def async_step_confirm(
-        self, user_input: dict[str, Any] | None = None
-    ) -> ConfigFlowResult:
-        """Ask the user to start physical confirmation."""
-        if user_input is not None:
-            self._confirmation_task = self.hass.async_create_task(
-                self._async_wait_for_button(),
-                f"Confirm eWeLink Remote BLE {self._remote_id}",
-            )
-            return await self.async_step_wait_for_button()
-
-        return self.async_show_form(
-            step_id="confirm",
-            data_schema=probatio.Schema({}),
-            description_placeholders={"name": self._device_name},
+        self._confirmation_task = self.hass.async_create_task(
+            self._async_wait_for_button_after_user_interaction(),
+            f"Confirm eWeLink Remote BLE {self._remote_id}",
         )
+        return await self.async_step_wait_for_button()
 
     async def async_step_wait_for_button(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
         """Wait for a new advertisement from the selected remote."""
         if self._confirmation_task is None:
-            return await self.async_step_confirm()
+            return self.async_abort(reason="confirmation_failed")
 
         if not self._confirmation_task.done():
             return self.async_show_progress(
@@ -98,16 +86,8 @@ class EwelinkRemoteBleConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_timeout(
         self, user_input: dict[str, Any] | None = None
     ) -> ConfigFlowResult:
-        """Allow retrying a timed-out confirmation."""
-        if user_input is not None:
-            self._confirmation_task = None
-            return await self.async_step_confirm(user_input={})
-
-        return self.async_show_form(
-            step_id="timeout",
-            data_schema=probatio.Schema({}),
-            description_placeholders={"name": self._device_name},
-        )
+        """Abort after a timed-out confirmation."""
+        return self.async_abort(reason="confirmation_timeout")
 
     async def async_step_finish(
         self, user_input: dict[str, Any] | None = None
@@ -132,10 +112,16 @@ class EwelinkRemoteBleConfigFlow(ConfigFlow, domain=DOMAIN):
         device_type = self._device_type or "Remote"
         return f"SONOFF SwitchMan {device_type} {remote_id[-4:]}"
 
-    async def _async_wait_for_button(self) -> bool:
-        """Wait until the same physical remote sends another button packet."""
+    async def _async_wait_for_button_after_user_interaction(self) -> bool:
+        """Wait for interaction, then for another packet from the same remote."""
         if self._remote_id is None:
             return False
+
+        # Home Assistant marks a discovery flow as protected once the user opens
+        # it from the discovered-devices card. Do not accept a second packet
+        # before that point, or an unattended remote could confirm itself.
+        while not self.context.get("dismiss_protected"):
+            await asyncio.sleep(_INTERACTION_POLL_INTERVAL)
 
         runtime = self.hass.data.setdefault(DOMAIN, {})
         waiters = runtime.setdefault(DATA_CONFIRMATION_WAITERS, {})

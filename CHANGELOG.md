@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.4.1
+
+- Open the physical button confirmation screen immediately after selecting Add.
+- Remove the empty intermediate confirmation dialog shown by Home Assistant.
+- Keep unattended discovery packets from confirming a remote before the user
+  opens its discovered-device card.
+
 ## 0.4.0
 
 - Offer unknown R5 remotes as discovered devices instead of creating them

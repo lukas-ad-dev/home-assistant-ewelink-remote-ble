@@ -3,19 +3,12 @@
     "flow_title": "{name}",
     "abort": {
       "already_configured": "This eWeLink Remote BLE device is already configured.",
-      "confirmation_failed": "The remote could not be confirmed."
+      "confirmation_failed": "The remote could not be confirmed.",
+      "confirmation_timeout": "No button press was received within 60 seconds. Press a button again to rediscover the remote, then select Add and confirm it."
     },
     "step": {
       "user": {
         "description": "Starts listening for SONOFF eWeLink-Remote BLE devices. Unknown remotes appear as discovered devices and are added only after physical confirmation."
-      },
-      "confirm": {
-        "title": "Add {name}",
-        "description": "Select Submit to start confirmation. Then press any button on {name}. The remote is not added until that button press is received."
-      },
-      "timeout": {
-        "title": "Confirmation timed out",
-        "description": "No new button press was received from {name}. Select Submit to try again."
       }
     },
     "progress": {
