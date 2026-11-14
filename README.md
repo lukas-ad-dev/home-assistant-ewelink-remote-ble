@@ -24,7 +24,8 @@ assigned to an area, and used in device-based automations.
 ## Features
 
 - One Home Assistant device per physical R5
-- Automatic discovery of additional R5 remotes
+- Discovery of additional R5 remotes with physical button confirmation
+- Unknown remotes are not created as Home Assistant devices automatically
 - Six event entities per R5, with their physical positions in the name
 - Device automation triggers for every button and action
 - Short press, double press, hold start, hold repeat, and hold release
@@ -78,8 +79,11 @@ Tested with Home Assistant 2026.11 and an SMLIGHT SLZB-MR4U running SLZB-OS.
 4. Install **eWeLink Remote BLE** and restart Home Assistant.
 5. Open **Settings → Devices & services → Add integration**.
 6. Search for **eWeLink Remote BLE** and complete the empty setup form.
-7. Press any R5 button once. The remote appears as a new device with six event
-   entities.
+7. Press any R5 button once. Home Assistant shows the remote as a discovered
+   device, but does not add it yet.
+8. Select **Configure**, then **Submit**. Press any button on that same R5 within
+   60 seconds to confirm physical access. Only then is the device created with
+   six event entities.
 
 ## Manual installation
 
@@ -91,9 +95,10 @@ directory, restart Home Assistant, and then add the integration from
 ## Areas and multiple remotes
 
 Every physical R5 has its own stable device identifier. Open the device, select
-**Edit**, and choose its area. A second R5 is discovered as a separate device and
-can be assigned to another area. The six buttons remain entities of that remote;
-they are not incorrectly created as six separate devices.
+**Edit**, and choose its area. A second R5 is offered as a separate discovered
+device and is not added until its confirmation button press succeeds. It can
+then be assigned to another area. The six buttons remain entities of that
+remote; they are not incorrectly created as six separate devices.
 
 ## Automation example
 
@@ -112,9 +117,11 @@ triggers.
 
 ## Troubleshooting
 
-- **Device does not appear:** verify that Home Assistant receives Bluetooth
+- **Discovery does not appear:** verify that Home Assistant receives Bluetooth
   advertisements from the configured receiver or proxy, then press an R5
-  button.
+  button. Check the discovered section under **Settings → Devices & services**.
+- **Confirmation times out:** select retry and press a button on the same R5
+  within 60 seconds.
 - **Device exists but has no entities:** restart Home Assistant after updating
   this integration to version 0.3.0 or later.
 - **Hold release feels delayed:** this is expected because the R5 has no release
@@ -162,7 +169,8 @@ Automatisierungen verwendet werden.
 ### Funktionen
 
 - Ein Home-Assistant-Gerät pro physischem R5
-- Automatische Erkennung weiterer R5-Fernbedienungen
+- Erkennung weiterer R5-Fernbedienungen mit Bestätigung per Tastendruck
+- Unbekannte Fernbedienungen werden nicht automatisch als Gerät angelegt
 - Sechs Ereignis-Entitäten pro R5, deren Namen die jeweilige Tastenposition
   enthalten
 - Geräteauslöser für jede Taste und jede Betätigungsart
@@ -222,8 +230,12 @@ Getestet mit Home Assistant 2026.11 und einem SMLIGHT SLZB-MR4U mit SLZB-OS.
 5. **Einstellungen → Geräte & Dienste → Integration hinzufügen** öffnen.
 6. Nach **eWeLink Remote BLE** suchen und das leere Einrichtungsformular
    abschließen.
-7. Einmal eine beliebige Taste des R5 drücken. Die Fernbedienung erscheint als
-   neues Gerät mit sechs Ereignis-Entitäten.
+7. Einmal eine beliebige Taste des R5 drücken. Home Assistant zeigt die
+   Fernbedienung zunächst nur als entdecktes Gerät an und fügt sie noch nicht
+   hinzu.
+8. **Konfigurieren** und danach **Absenden** wählen. Innerhalb von 60 Sekunden
+   eine beliebige Taste genau dieser Fernbedienung drücken. Erst nach dieser
+   physischen Bestätigung wird das Gerät mit sechs Ereignis-Entitäten angelegt.
 
 ### Manuelle Installation
 
@@ -236,9 +248,11 @@ hinzufügen.
 
 Jeder physische R5 erhält eine eigene stabile Gerätekennung. Das Gerät öffnen,
 **Bearbeiten** wählen und den gewünschten Bereich festlegen. Ein weiterer R5
-wird als separates Gerät erkannt und kann einem anderen Bereich zugeordnet
-werden. Die sechs Tasten bleiben Entitäten der jeweiligen Fernbedienung und
-werden nicht fälschlicherweise als sechs einzelne Geräte angelegt.
+wird zunächst als separates entdecktes Gerät angeboten und erst nach seinem
+Bestätigungs-Tastendruck hinzugefügt. Danach kann er einem anderen Bereich
+zugeordnet werden. Die sechs Tasten bleiben Entitäten der jeweiligen
+Fernbedienung und werden nicht fälschlicherweise als sechs einzelne Geräte
+angelegt.
 
 ### Beispiel für eine Automatisierung
 
@@ -257,9 +271,12 @@ Ereignis-Entitäten direkt als Auslöser verwenden.
 
 ### Fehlerbehebung
 
-- **Das Gerät erscheint nicht:** Prüfen, ob Home Assistant
+- **Die Entdeckung erscheint nicht:** Prüfen, ob Home Assistant
   Bluetooth-Werbeaussendungen vom eingerichteten Empfänger oder Proxy empfängt,
-  und anschließend eine R5-Taste drücken.
+  anschließend eine R5-Taste drücken und unter **Einstellungen → Geräte &
+  Dienste** im Bereich der entdeckten Geräte nachsehen.
+- **Die Bestätigung läuft ab:** Erneut versuchen und innerhalb von 60 Sekunden
+  eine Taste genau dieser R5-Fernbedienung drücken.
 - **Das Gerät ist vorhanden, hat aber keine Entitäten:** Home Assistant nach
   einer Aktualisierung auf Version 0.3.0 oder neuer neu starten.
 - **Das Loslassen wird verzögert erkannt:** Das ist zu erwarten, da der R5 kein

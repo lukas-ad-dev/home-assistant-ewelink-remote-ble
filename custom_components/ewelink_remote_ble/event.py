@@ -12,13 +12,12 @@ from homeassistant.components.event import (
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import Event, HomeAssistant, callback
 from homeassistant.helpers import device_registry as dr
-from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 
 from .const import (
+    DATA_ENTRIES,
     DOMAIN,
     EVENT_BUTTON,
-    SIGNAL_DEVICE_DISCOVERED,
     TRIGGER_SUBTYPES,
 )
 
@@ -91,14 +90,9 @@ async def async_setup_entry(
             return
         seen.add(remote_id)
         async_add_entities(
-            EwelinkRemoteButtonEvent(remote_id, button)
-            for button in range(1, 7)
+            EwelinkRemoteButtonEvent(remote_id, button) for button in range(1, 7)
         )
 
-    known_devices = hass.data[DOMAIN][entry.entry_id]["known_devices"]
+    known_devices = hass.data[DOMAIN][DATA_ENTRIES][entry.entry_id]["known_devices"]
     for remote_id, device_type in known_devices.items():
         add_remote(remote_id, device_type)
-
-    entry.async_on_unload(
-        async_dispatcher_connect(hass, SIGNAL_DEVICE_DISCOVERED, add_remote)
-    )

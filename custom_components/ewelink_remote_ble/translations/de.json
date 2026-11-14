@@ -1,12 +1,25 @@
 {
   "config": {
+    "flow_title": "{name}",
     "abort": {
-      "already_configured": "eWeLink Remote BLE ist bereits eingerichtet."
+      "already_configured": "Dieses eWeLink-Remote-BLE-Gerät ist bereits eingerichtet.",
+      "confirmation_failed": "Die Fernbedienung konnte nicht bestätigt werden."
     },
     "step": {
       "user": {
-        "description": "Fügt SONOFF eWeLink-Remote-BLE-Geräte automatisch hinzu, sobald eine Taste gedrückt wird."
+        "description": "Startet den Empfang für SONOFF-eWeLink-Remote-BLE-Geräte. Unbekannte Fernbedienungen erscheinen zunächst als entdeckte Geräte und werden erst nach einer Bestätigung am Gerät hinzugefügt."
+      },
+      "confirm": {
+        "title": "{name} hinzufügen",
+        "description": "Wähle „Absenden“, um die Bestätigung zu starten. Drücke danach eine beliebige Taste auf {name}. Die Fernbedienung wird erst nach diesem Tastendruck hinzugefügt."
+      },
+      "timeout": {
+        "title": "Bestätigung abgelaufen",
+        "description": "Von {name} wurde kein neuer Tastendruck empfangen. Wähle „Absenden“, um es erneut zu versuchen."
       }
+    },
+    "progress": {
+      "wait_for_button": "Drücke eine beliebige Taste auf {name}, um diese Fernbedienung zu bestätigen."
     }
   },
   "entity": {

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.4.0
+
+- Offer unknown R5 remotes as discovered devices instead of creating them
+  automatically.
+- Require a fresh physical button press before a discovered remote is added.
+- Keep previously configured remotes and their existing names, areas, entities,
+  and automations working after the update.
+- Add a 60-second confirmation screen with retry support.
+
 ## 0.3.1
 
 - Add original six-button brand artwork for Home Assistant and GitHub.
